@@ -4,15 +4,22 @@ import ExpenseForm from './components/ExpenseForm'
 import ExpenseList from './components/ExpenseList'
 
 export default class App extends Component {
-  initialExpense = [
-    { id: 1, charge: '콜라', amount: 2000 },
-    { id: 2, charge: '빵', amount: 1000 },
-    { id: 3, charge: '맥북', amount: 2000000 },
-  ]
+  constructor(props) {
+    super(props)
+    this.state = {
+      expenses: [
+        { id: 1, charge: '콜라', amount: 2000 },
+        { id: 2, charge: '빵', amount: 1000 },
+        { id: 3, charge: '맥북', amount: 2000000 },
+      ],
+    }
+  }
 
   handleDelete = (id) => {
-    const newExpense = this.initialExpense.filter((expense) => expense.id !== id)
+    const newExpense = this.state.expenses.filter((expense) => expense.id !== id)
     console.log(newExpense)
+
+    this.setState({ expenses: newExpense })
   }
 
   render() {
@@ -26,7 +33,7 @@ export default class App extends Component {
             </div>
             <div style={{ width: '100%', backgroundColor: 'white', padding: '1rem' }}>
               <ExpenseList
-                initialExpense={this.initialExpense}
+                initialExpense={this.state.expenses}
                 handleDelete={this.handleDelete}
               />
             </div>
