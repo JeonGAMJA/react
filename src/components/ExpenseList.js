@@ -7,9 +7,8 @@ const ExpenseList = ({ initialExpense, handleDelete }) => {
     <>
       <ul className="list">
         {initialExpense.map((expense) => {
-          return (
-            <ExpenseItem key={expense.id} expense={expense} handleDelete={handleDelete} />
-          )
+          console.log(expense)
+          return <ExpenseItem expense={expense} handleDelete={handleDelete} />
         })}
       </ul>
       <button className="btn">목록 지우기</button>

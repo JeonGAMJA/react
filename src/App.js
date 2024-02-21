@@ -30,8 +30,8 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (charge !== '' && amount > 0) {
-      const newExpense = { id: crypto.randomUUID(), charge, amount }
-      const newExpenses = { ...expenses, newExpense }
+      const newExpense = { id: crypto.randomUUID(), charge: charge, amount: amount }
+      const newExpenses = [...expenses, newExpense]
       setExpenses(newExpenses)
       setCharge('')
       setAmount(0)
