@@ -22,7 +22,6 @@ const App = () => {
 
   const handleEdit = (id) => {
     const expense = expenses.find((item) => item.id === id)
-    console.log(expense)
     const { charge, amount } = expense
     setCharge(charge)
     setAmount(amount)
@@ -42,6 +41,10 @@ const App = () => {
     const newExpense = expenses.filter((expense) => expense.id !== id)
     setExpenses(newExpense)
     handleAlert({ type: 'dange', text: '아이템이 삭제되었습니다.' })
+  }
+
+  const clearItems = () => {
+    setExpenses([])
   }
 
   const handleSubmit = (e) => {
@@ -98,6 +101,7 @@ const App = () => {
               initialExpense={expenses}
               handleDelete={handleDelete}
               handleEdit={handleEdit}
+              clearItems={clearItems}
             />
           </div>
           <div style={{ display: 'flex', justifyContent: 'start', marginTop: '1rem' }}>
