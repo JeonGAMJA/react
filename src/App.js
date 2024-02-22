@@ -20,8 +20,9 @@ const App = () => {
 
   const [edit, setEdit] = useState()
 
-  const handleEdit = () => {
+  const handleEdit = (id) => {
     const expense = expenses.find((item) => item.id === id)
+    console.log(expense)
     const { charge, amount } = expense
     setCharge(charge)
     setAmount(amount)
