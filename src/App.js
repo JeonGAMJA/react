@@ -14,20 +14,8 @@ const App = () => {
 
   const [charge, setCharge] = useState('')
   const [amount, setAmount] = useState(0)
-  const [id, setId] = useState('')
 
   const [alert, setAlert] = useState({ show: false })
-
-  const [edit, setEdit] = useState()
-
-  const handleEdit = (id) => {
-    const expense = expenses.find((item) => item.id === id)
-    const { charge, amount } = expense
-    setCharge(charge)
-    setAmount(amount)
-    setEdit(true)
-    setId(id)
-  }
 
   const handleCharge = (e) => {
     setCharge(e.target.value)
@@ -43,6 +31,16 @@ const App = () => {
     handleAlert({ type: 'dange', text: '아이템이 삭제되었습니다.' })
   }
 
+  const handleEdit = (edit, expense) => {
+    if (edit) {
+      const newExpenses = expenses.map((item) =>
+        item.id === expense.id ? expense : item,
+      )
+      setExpenses(newExpenses)
+      handleAlert({ type: 'success', text: '아이템이 수정되었습니다.' })
+    }
+  }
+
   const clearItems = () => {
     setExpenses([])
   }
@@ -50,19 +48,10 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (charge !== '' && amount > 0) {
-      if (edit) {
-        const newExpenses = expenses.map((item) => {
-          return item.id === id ? { ...item, charge, amount } : item
-        })
-        setExpenses(newExpenses)
-        setEdit(false)
-        handleAlert({ type: 'success', text: '아이템이 수정되었습니다.' })
-      } else {
-        const newExpense = { id: crypto.randomUUID(), charge: charge, amount: amount }
-        const newExpenses = [...expenses, newExpense]
-        setExpenses(newExpenses)
-        handleAlert({ type: 'success', text: '아이템이 생성되었습니다.' })
-      }
+      const newExpense = { id: crypto.randomUUID(), charge: charge, amount: amount }
+      const newExpenses = [...expenses, newExpense]
+      setExpenses(newExpenses)
+      handleAlert({ type: 'success', text: '아이템이 생성되었습니다.' })
       setCharge('')
       setAmount(0)
     } else {
@@ -93,15 +82,14 @@ const App = () => {
               amount={amount}
               handleAmount={handleAmount}
               handleSubmit={handleSubmit}
-              edit={edit}
             />
           </div>
           <div style={{ width: '100%', backgroundColor: 'white', padding: '1rem' }}>
             <ExpenseList
               initialExpense={expenses}
               handleDelete={handleDelete}
-              handleEdit={handleEdit}
               clearItems={clearItems}
+              handleEdit={handleEdit}
             />
           </div>
           <div style={{ display: 'flex', justifyContent: 'start', marginTop: '1rem' }}>

@@ -2,8 +2,9 @@ import React from 'react'
 import './ExpenseList.css'
 import ExpenseItem from './ExpenseItem'
 import { MdDelete } from 'react-icons/md'
+import { useState } from 'react'
 
-const ExpenseList = ({ initialExpense, handleDelete, handleEdit, clearItems }) => {
+const ExpenseList = ({ initialExpense, handleDelete, clearItems, handleEdit }) => {
   return (
     <>
       <ul className="list">
@@ -11,6 +12,7 @@ const ExpenseList = ({ initialExpense, handleDelete, handleEdit, clearItems }) =
         {initialExpense.map((expense) => {
           return (
             <ExpenseItem
+              key={expense.id}
               expense={expense}
               handleDelete={handleDelete}
               handleEdit={handleEdit}
